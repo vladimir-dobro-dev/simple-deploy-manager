@@ -9,7 +9,16 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${fileDirname}"
+            "program": "./main",
+            "windows": {
+                "buildFlags": "-tags=windowsdesktop",
+            },
+            "linux": {
+                "buildFlags": "-tags=linuxdesktop",
+            },
+            "osx": {
+                "buildFlags": "-tags=osxdesktop",
+            },
         }
     ]
 }
