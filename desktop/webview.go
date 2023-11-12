@@ -1,6 +1,8 @@
 package desktop
 
-import webview "github.com/webview/webview_go"
+import (
+	webview "github.com/webview/webview_go"
+)
 
 var window_width int = 400
 var window_height int = 600
