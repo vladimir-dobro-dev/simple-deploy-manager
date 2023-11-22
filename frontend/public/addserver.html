@@ -1,0 +1,17 @@
+<form id="addserver" name="addserver">
+  <label for="address" class="form-label mt-3">IP address</label>
+  <input type="text" class="form-control" name="address" id="address" required value="127.0.0.1">
+
+  <label for="username" class="form-label mt-3">User name</label>
+  <input type="text" class="form-control" name="username" id="username" required value="root">
+
+  <label for="password" class="form-label mt-3">Password</label>
+  <input type="password" class="form-control" name="password" id="password" required>
+
+  <label for="port" class="form-label mt-3">Port</label>
+  <input type="number" class="form-control" name="port" id="port" required value="22">
+
+  <button id="button-connectserver" class="btn btn-primary mt-3">
+    Connect to server
+  </button>
+</form>
