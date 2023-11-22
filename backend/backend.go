@@ -8,11 +8,11 @@ import (
 )
 
 func Run() {
-	router := SetRoutes()
+	router := SetRouter()
 	router.Run("127.0.0.1:2082")
 }
 
-func SetRoutes() *gin.Engine {
+func SetRouter() *gin.Engine {
 	router := gin.Default()
 
 	config := cors.DefaultConfig()
@@ -22,7 +22,7 @@ func SetRoutes() *gin.Engine {
 	router.Use(cors.New(config))
 
 	router.GET("/api/hello", routers.Hello)
-	router.GET("/api/installpath", routers.InstallPath)
+	router.POST("/api/addserver", routers.AddServer)
 
 	return router
 }
