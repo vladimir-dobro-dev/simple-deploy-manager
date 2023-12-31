@@ -1,0 +1,11 @@
+Windows desktop
+go build -ldflags="-H windowsgui -s -w" -tags windowsdesktop -o ./build/simple-deploy-manager.exe ./main
+
+Linux desktop
+go build -ldflags="-s -w" -tags linuxdesktop -o ./build/simple-deploy-manager ./main
+
+MacOS desktop
+go build -ldflags="-s -w" -tags osxdesktop -o ./build/simple-deploy-manager ./main
+
+Android lib
+gomobile bind -o build/backend.aar -target=android -androidapi=26 ./backend
