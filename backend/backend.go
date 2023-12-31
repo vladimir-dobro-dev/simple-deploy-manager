@@ -1,15 +1,19 @@
 package backend
 
 import (
+	"net/http"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
-	"github.com/vladimir-dobro-dev/simple-deploy-manager/backend/webapi/routers"
+	staticfiles "github.com/vladimir-dobro-dev/simple-deploy-manager"
+	"github.com/vladimir-dobro-dev/simple-deploy-manager/backend/routers"
 )
 
-func Run() {
+func Run(url string) {
 	router := SetRouter()
-	router.Run("127.0.0.1:2082")
+	router.StaticFS("www", http.FS(staticfiles.GetFS()))
+	go router.Run(url)
 }
 
 func SetRouter() *gin.Engine {
@@ -22,7 +26,8 @@ func SetRouter() *gin.Engine {
 	router.Use(cors.New(config))
 
 	router.GET("/api/hello", routers.Hello)
-	router.POST("/api/addserver", routers.AddServer)
+	router.POST("/api/addserver", routers.ConnectServer)
+	router.POST("/api/installapp", routers.InstallApp)
 
 	return router
 }

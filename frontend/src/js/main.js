@@ -1,7 +1,8 @@
 // import * as bootstrap from "bootstrap"
 // import { Tooltip, Toast, Popover } from 'bootstrap'
 
-import AddServer from "./pages/addserver.js"
+import AddServer from "./pages/connectserver.js"
+import InstallApp from "./pages/installapp.js"
 
 import "../styles/styles.scss"
 import "../styles/styles.css"
@@ -11,49 +12,30 @@ export const api = "http://127.0.0.1:2082/api"
 
 const routes = {
     "/": AddServer,
+    "/applications": InstallApp,
 }
 
 const app = document.getElementById("app");
 
-async function router() {
-    let path = location.pathname.replace(www, "")
-    let render = routes[path]
-    if (render) {
-        await setPage(render)
-    } else {
-        history.replaceState("", "", "/www/")
-        router()
-    }
-}
-
-async function routerpop() {
+export async function router() {
     let path = location.pathname.replace(www, "")
     let page = routes[path]
     if (page) {
-        await setPage(page)
+        await render(page)
     } else {
-        history.replaceState("", "", "/www/")
+        history.replaceState("", "", www + "/")
         router()
     }
 }
 
-async function setPage(render) {
-    const page = render()
-    document.title = page.title
-    const response = await fetch(www + "/" + page.html)
+async function render(page) {
+    let pageData = page()
+    document.title = pageData.title
+    const response = await fetch(www + "/" + pageData.html)
     const html = await response.text()
     app.innerHTML = html
-    page.effect()
+    pageData.effect()
 }
 
-// window.addEventListener("click", e => {
-//     if (e.target) {
-//         e.preventDefault()
-//         history.pushState("", "", e.target.href)
-//         console.log(history)
-//         router()
-//     }
-// })
-
-window.addEventListener("popstate", routerpop)
+window.addEventListener("popstate", router)
 window.addEventListener("DOMContentLoaded", router)
