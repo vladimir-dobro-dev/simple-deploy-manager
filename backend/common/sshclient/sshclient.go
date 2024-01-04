@@ -2,12 +2,17 @@ package sshclient
 
 import (
 	"log"
+	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/melbahja/goph"
 )
 
-func Connect() *goph.Client {
-	client, err := goph.New("devs", "127.0.0.1", goph.Password("1234"))
+func New() *goph.Client {
+	godotenv.Load()
+	sshUser := os.Getenv("SSH_USER")
+	sshPassword := os.Getenv("SSH_PASSWORD")
+	client, err := goph.New(sshUser, "127.0.0.1", goph.Password(sshPassword))
 	if err != nil {
 		log.Fatal(err)
 	}
