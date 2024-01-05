@@ -26,7 +26,7 @@ func SetRouter() *gin.Engine {
 	router.Use(cors.New(config))
 
 	router.GET("/api/hello", routers.Hello)
-	router.POST("/api/addserver", routers.ConnectServer)
+	router.POST("/api/connectserver", routers.ConnectServer)
 	router.POST("/api/installapp", routers.InstallApp)
 
 	return router

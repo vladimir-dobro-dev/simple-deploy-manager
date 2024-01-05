@@ -1,28 +1,42 @@
 package sshclient
 
 import (
-	"log"
 	"os"
 
 	"github.com/joho/godotenv"
 	"github.com/melbahja/goph"
 )
 
-func New() *goph.Client {
-	godotenv.Load()
-	sshUser := os.Getenv("SSH_USER")
-	sshPassword := os.Getenv("SSH_PASSWORD")
-	client, err := goph.New(sshUser, "127.0.0.1", goph.Password(sshPassword))
-	if err != nil {
-		log.Fatal(err)
+var sshClient *goph.Client
+
+type ConnectData struct {
+	Address  string
+	User     string
+	Password string
+	Port     string
+}
+
+func New(data ConnectData) (c *goph.Client, err error) {
+	if sshClient != nil {
+		return sshClient, nil
 	}
 
-	return client
-	// defer client.Close()
+	var address, user, password, port string
+	e := godotenv.Load()
+	if e == nil {
+		address = os.Getenv("SSH_ADDRESS")
+		user = os.Getenv("SSH_USER")
+		password = os.Getenv("SSH_PASSWORD")
+		port = os.Getenv("SSH_PORT")
 
-	// out, err := client.Run("touch file.txt")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// log.Println(string(out))
+	} else {
+		address = data.Address
+		user = data.User
+		password = data.Password
+		port = data.Port
+	}
+
+	c, err = goph.New(user, address+":"+port, goph.Password(password))
+
+	return
 }

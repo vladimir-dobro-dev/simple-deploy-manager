@@ -40,7 +40,12 @@ func InstallApp(c *gin.Context) {
 		dst.Write(data[:n])
 	}
 
-	client := sshclient.New()
+	var connectData sshclient.ConnectData
+	client, err := sshclient.New(connectData)
+	if err != nil {
+		return
+	}
+
 	err = client.Upload(dst.Name(), "app.zip")
 	if err != nil {
 		return
