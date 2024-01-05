@@ -3,29 +3,26 @@ package routers
 import (
 	"fmt"
 	"net/http"
-	"os"
 
 	"github.com/gin-gonic/gin"
-	//	"github.com/vladimir-dobro-dev/simple-deploy-manager/backend/common/sshclient"
+	"github.com/vladimir-dobro-dev/simple-deploy-manager/backend/common/sshclient"
 )
 
-type ConnectData struct {
-	Address  string
-	UserName string
-	Password string
-	Port     string
-}
-
 func ConnectServer(c *gin.Context) {
-	var connectData ConnectData
+	var connectData sshclient.ConnectData
 	if c.Bind(&connectData) == nil {
 		fmt.Print(connectData)
-		//client := sshclient.Connect()
-		//client.Close()
-		const path = "/storage/emulated/0/Documents/test.txt"
-		f, _ := os.Create(path)
-		defer f.Close()
+		status := "ok"
+		_, err := sshclient.New(connectData)
+		if err != nil {
+			status = err.Error()
+		}
+		c.JSON(http.StatusOK, gin.H{"status": status})
+		// c.JSON(http.StatusOK, gin.H{"status": "ok"})
+		// const path = "/storage/emulated/0/Documents/test.txt"
+		// f, _ := os.Create(path)
+		// defer f.Close()
 	}
-	c.String(http.StatusOK, "Connect...")
+	// c.String(http.StatusOK, "Connect...")
 	// c.JSON(http.StatusOK, gin.H{"status": "ok"})
 }

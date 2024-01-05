@@ -1,17 +1,27 @@
-<form id="connectServer" name="connectServer">
-  <label for="address" class="form-label mt-3">IP address</label>
-  <input type="text" class="form-control" name="address" id="address" required value="127.0.0.1">
+<form id="connectServerForm" name="connectServerForm">
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" name="address" id="address" required placeholder="127.0.0.1" value="127.0.0.1">
+    <label for="address1">IP address</label>
+  </div>
 
-  <label for="username" class="form-label mt-3">User name</label>
-  <input type="text" class="form-control" name="username" id="username" required value="root">
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" name="username" id="username" required placeholder="root" value="root">
+    <label for="username">User name</label>
+  </div>
 
-  <label for="password" class="form-label mt-3">Password</label>
-  <input type="password" class="form-control" name="password" id="password" required>
+  <div class="form-floating mb-3">
+    <input type="password" class="form-control" name="password" id="password" required placeholder="">
+    <label for="password">Password</label>
+  </div>
 
-  <label for="port" class="form-label mt-3">Port</label>
-  <input type="number" class="form-control" name="port" id="port" required value="22">
+  <div class="form-floating mb-3">
+    <input type="number" class="form-control" name="port" id="port" required placeholder="22" value="22">
+    <label for="port">Port</label>
+  </div>
 
-  <button id="connect" class="btn btn-primary mt-3">
-    Connect to server
-  </button>
+  <div class="text-center">
+    <button id="connect" class="btn btn-primary btn-lg">
+      Connect to server
+    </button>
+  </div>
 </form>

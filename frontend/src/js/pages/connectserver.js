@@ -9,14 +9,14 @@ export default function AddServer() {
 
     async function serverConnect(e) {
         e.preventDefault()
-        const connectServerForm = document.connectServer
+        const connectServerForm = document.connectServerForm
         let connectData = {
             address: connectServerForm.address.value,
-            username: connectServerForm.username.value,
+            user: connectServerForm.username.value,
             password: connectServerForm.password.value,
             port: connectServerForm.port.value
         }
-        const response = await fetch(api + "/addserver", {
+        const response = await fetch(api + "/connectserver", {
             method: "POST",
             headers: { "Accept": "application/json", "Content-Type": "application/json" },
             body: JSON.stringify(connectData)
